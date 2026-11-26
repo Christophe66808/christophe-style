@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CHRISTOPHE STYLE — by Christophe Ntamugale</title>
+<meta name="description" content="Boutique mode homme et femme : vêtements, chaussures, montres et bracelets.">
+
+<style>
+:root{--ink:#171717;--gold:#b99752;--cream:#f6f3ed;--green:#18834b;--muted:#858585;--line:#e9e4dc}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--cream);color:var(--ink);font-family:Arial,Helvetica,sans-serif}
+
+header{position:sticky;top:0;z-index:10;background:#fff;display:flex;align-items:center;justify-content:space-between;gap:14px;padding:17px 4.5%;box-shadow:0 2px 12px #00000008}
+.brand{font:700 clamp(20px,3vw,29px) Georgia,serif;letter-spacing:2px}
+.brand em{font-style:normal;color:var(--gold)}
+.brand small{display:block;font:10px Arial;letter-spacing:3px;color:#777;margin-top:7px}
+nav{display:flex;gap:18px}
+nav a{color:#222;text-decoration:none;font-size:13px}
+.cartBtn{background:#111;color:#fff;border:0;border-radius:40px;padding:13px 17px;font-weight:bold;cursor:pointer;white-space:nowrap}
+.cartBtn b{display:inline-grid;place-items:center;background:var(--gold);color:#111;border-radius:50%;width:25px;height:25px;margin-left:7px}
+
+.hero{background:#171717;color:#fff;padding:56px 5%;display:grid;grid-template-columns:1.2fr .8fr;gap:25px;align-items:center}
+.kicker{font-size:11px;letter-spacing:3px;color:var(--gold);font-weight:bold}
+.hero h1{font:clamp(38px,6vw,68px)/1.04 Georgia,serif;margin:17px 0}
+.hero h1 span{color:var(--gold)}
+.hero p{max-width:560px;color:#d4d4d4;line-height:1.8}
+.heroLink{display:inline-block;margin-top:14px;padding:14px 22px;background:var(--gold);color:#111;text-decoration:none;font-weight:bold}
+.heroVisual{height:300px;border-radius:4px;overflow:hidden;position:relative}
+.heroVisual img{width:100%;height:100%;object-fit:cover;filter:brightness(.8)}
+.heroVisual:after{content:"";position:absolute;inset:0;border:1px solid #c6a15b80}
+
+main{max-width:1440px;margin:auto}
+.section{padding:38px 4.5%}
+.titleRow{display:flex;align-items:end;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.titleRow h2{font:32px Georgia,serif;margin:0}
+.titleRow p{margin:9px 0 0;color:var(--muted);font-size:14px}
+
+.filters{display:flex;gap:9px;overflow-x:auto;padding:22px 0 18px}
+.filters button{flex:0 0 auto;border:1px solid #ddd7cc;background:#fff;padding:11px 17px;border-radius:30px;cursor:pointer;font-size:13px}
+.filters button.active{background:#111;color:#fff;border-color:#111}
+
+.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:17px}
+.card{background:#fff;border:1px solid var(--line);border-radius:5px;overflow:hidden;min-width:0;box-shadow:0 4px 14px #00000005;transition:transform .2s}
+.card:hover{transform:translateY(-3px)}
+.photo{height:230px;background:#e8e2d8;position:relative;overflow:hidden}
+.photo img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .35s}
+.card:hover .photo img{transform:scale(1.04)}
+.badge{position:absolute;top:12px;left:12px;background:#111;color:#fff;padding:8px 11px;font-size:10px;letter-spacing:1.4px;text-transform:uppercase}
+.details{padding:17px}
+.cat{font-size:11px;color:#999;letter-spacing:1.5px;text-transform:uppercase}
+.details h3{font:bold 20px/1.25 Georgia,serif;margin:10px 0 9px;min-height:48px}
+.desc{color:#777;font-size:12px;line-height:1.5;min-height:35px}
+.usd{font-size:20px;color:#a27d37;font-weight:bold;margin-top:14px}
+.fbu{font-size:15px;color:var(--green);font-weight:bold;margin:8px 0 15px}
+.add{width:100%;background:#111;color:#fff;border:0;padding:14px 9px;font-size:12px;font-weight:bold;letter-spacing:.6px;cursor:pointer}
+.add:hover{background:var(--gold);color:#111}
+
+.about{background:#fff;padding:26px;border:1px solid var(--line);line-height:1.8}
+.about h2{font:30px Georgia,serif;margin:0 0 10px}
+.about strong{color:#a27d37}
+
+footer{background:#111;color:#ddd;text-align:center;padding:28px 5%;line-height:1.8;font-size:14px}
+footer strong{color:var(--gold)}
+
+.shade{position:fixed;inset:0;background:#0008;z-index:30;display:none;justify-content:flex-end}
+.shade.show{display:flex}
+.drawer{width:min(460px,100%);height:100%;background:#fff;padding:22px;overflow:auto}
+.drawerHead{display:flex;justify-content:space-between;align-items:center}
+.drawerHead h2{font:28px Georgia,serif}
+.x{border:0;background:none;font-size:30px;cursor:pointer}
+.cartLine{display:flex;justify-content:space-between;gap:10px;padding:14px 0;border-bottom:1px solid var(--line)}
+.cartLine small{display:block;color:#777;margin-top:5px}
+.qty{display:flex;align-items:center;gap:8px}
+.qty button{border:1px solid #ddd;background:#f6f3ed;padding:5px 10px;border-radius:4px;cursor:pointer}
+.sum{font-size:21px;font-weight:bold;margin:20px 0}
+.form input,.form textarea{width:100%;padding:12px;border:1px solid #ddd;border-radius:5px;margin:7px 0;font:inherit}
+.send{width:100%;padding:15px;border:0;border-radius:5px;background:var(--green);color:#fff;font-weight:bold;cursor:pointer;margin-top:10px}
+.tip{font-size:12px;color:#777;line-height:1.6}
+
+@media(max-width:1000px){
+.grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+.photo{height:210px}
+}
+
+@media(max-width:700px){
+header{padding:13px 3%;gap:10px}
+.brand{font-size:20px;letter-spacing:1px}
+.brand small{font-size:9px;letter-spacing:2px}
+nav{display:none}
+.cartBtn{padding:10px 12px;font-size:12px}
+.hero{grid-template-columns:1fr;padding:36px 5%}
+.heroVisual{height:190px}
+.section{padding:30px 3%}
+.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.photo{height:clamp(125px,40vw,205px)}
+.details{padding:12px}
+.details h3{font-size:16px;min-height:40px}
+.desc{font-size:11px;min-height:42px}
+.usd{font-size:16px}
+.fbu{font-size:13px}
+.add{font-size:10px;padding:12px 5px}
+.titleRow h2{font-size:27px}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="brand">
+    CHRISTOPHE <em>STYLE.</em>
+    <small>BY CHRISTOPHE NTAMUGALE</small>
+  </div>
+
+  <nav>
+    <a href="#shop">Boutique</a>
+    <a href="#about">À propos</a>
+    <a href="#contact">Contact</a>
+  </nav>
+
+  <button class="cartBtn" onclick="openCart()">
+    🛍 PANIER <b id="count">0</b>
+  </button>
+</header>
+
+<section class="hero">
+  <div>
+    <div class="kicker">COLLECTION HOMME & FEMME</div>
+    <h1>Le style est<br><span>votre signature.</span></h1>
+    <p>
+      Découvrez une sélection élégante de vêtements, chaussures,
+      montres et bracelets. Des essentiels mode pour affirmer
+      votre style, chaque jour.
+    </p>
+    <a class="heroLink" href="#shop">EXPLORER LA COLLECTION</a>
+  </div>
+
+  <div class="heroVisual">
+    <img
+      src="https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=1000&q=85"
+      alt="Mode et vêtements tendance">
+  </div>
+</section>
+
+<main>
+
+<section class="section" id="shop">
+  <div class="titleRow">
+    <div>
+      <h2>La sélection du moment</h2>
+      <p>Des pièces choisies pour vous — homme & femme.</p>
+    </div>
+  </div>
+
+  <div class="filters" id="filters">
+    <button class="active" data-cat="Tout">Tout voir</button>
+    <button data-cat="Chaussures">Chaussures</button>
+    <button data-cat="Vêtements">Vêtements</button>
+    <button data-cat="Montres">Montres</button>
+    <button data-cat="Bracelets">Bracelets</button>
+  </div>
+
+  <div class="grid" id="products"></div>
+</section>
+
+<section class="section" id="about">
+  <div class="about">
+    <h2>CHRISTOPHE STYLE</h2>
+    <p>
+      Une boutique de mode dédiée aux hommes et aux femmes.
+      Notre sélection réunit des vêtements, chaussures et
+      accessoires pour accompagner vos journées et vos occasions spéciales.
+    </p>
+    <p><strong>by Christophe Ntamugale</strong></p>
+  </div>
+</section>
+
+</main>
+
+<footer id="contact">
+  <strong>CHRISTOPHE STYLE.</strong><br>
+  by Christophe Ntamugale<br>
+  Commandes WhatsApp : <strong>+257 66 80 80 04</strong><br>
+  © 2026 Christophe Style
+</footer>
+
+<div class="shade" id="shade" onclick="shadeClick(event)">
+  <aside class="drawer">
+
+    <div class="drawerHead">
+      <h2>Votre panier</h2>
+      <button class="x" onclick="closeCart()">×</button>
+    </div>
+
+    <div id="cartItems"></div>
+    <div class="sum" id="total"></div>
+
+    <div class="form">
+      <input id="customerName" placeholder="Votre nom">
+      <input id="address" placeholder="Lieu de livraison">
+      <textarea id="note" rows="3" placeholder="Taille, couleur ou autre précision"></textarea>
+    </div>
+
+    <button class="send" onclick="sendOrder()">
+      COMMANDER SUR WHATSAPP
+    </button>
+
+    <p class="tip">
+      Votre commande s'ouvrira dans WhatsApp.
+      Vérifiez le message puis appuyez sur Envoyer pour confirmer.
+    </p>
+
+  </aside>
+</div>
+
+<script>
+
+/* NUMÉRO WHATSAPP DU BURUNDI */
+const WHATSAPP = "25766808004";
+
+/* TAUX INDICATIF : 1 USD = 2 900 FBU */
+const RATE = 2900;
+
+
+/* LISTE DES PRODUITS */
+
+const items = [
+
+{
+id:1,
+name:"Chaussures classiques homme",
+cat:"Chaussures",
+sex:"Homme",
+usd:42,
+desc:"Chaussures habillées pour un style raffiné.",
+img:"https://images.unsplash.com/photo-1614252235316-8c857d38b5f4?auto=format&fit=crop&w=800&q=85"
+},
+
+{
+id:2,
+name:"Sneakers tendance femme",
+cat:"Chaussures",
+sex:"Femme",
+usd:40,
+desc:"Sneakers modernes et confortables.",
+img:"https://images.unsplash.com/photo-1543163521-1bf539c55dd2?auto=format&fit=crop&w=800&q=85"
+},
+
+{
+id:3,
+name:"Sneakers street homme",
+cat:"Chaussures",
+sex:"Homme",
+usd:35,
+desc:"Un essentiel pour vos looks urbains.",
+img:"https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=800&q=85"
+},
+
+{
+id:4,
+name:"Talons élégants femme",
+cat:"Chaussures",
+sex:"Femme",
+usd:32,
+desc:"Une silhouette chic pour vos sorties.",
+img:"https://images.unsplash.com/photo-1543163521-1bf539c55dd2?auto=format&fit=crop&w=800&q=85"
+},
+
+{
+id:5,
+name:"Chemise classique homme",
+cat:"Vêtements",
+sex:"Homme",
+usd:22,
+desc:"Chemise soignée, facile à assortir.",
+img:"https://images.unsplash.com/photo-1596755094514-f87e34085b2c?auto=format&fit=crop&w=800&q=85"
+},
+
+{
+id:6,
+name:"Robe élégante femme",
+cat:"Vêtements",
+sex:"Femme",
+usd:30,
+desc:"Une pièce féminine pour vos occasions.",
+img:"https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&w=800&q=85"
+},
+
+{
+id:7,
+name:"T-shirt blanc homme",
+cat:"Vêtements",
+sex:"Homme",
+usd:15,
+desc:"Le basique essentiel du dressing.",
+img:"https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=800&q=85"
+},
+
+{
+id:8,
+name:"Look tendance femme",
+cat:"Vêtements",
+sex:"Femme",
+usd:38,
+desc:"Une tenue moderne et stylée.",
+img:"https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=800&q=85"
+},
+
+{
+id:9,
+name:"Montre premium homme",
+cat:"Montres",
+sex:"Homme",
+usd:45,
+desc:"Un accessoire intemporel et élégant.",
+img:"https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=800&q=85"
+},
+
+{
+id:10,
+name:"Montre chic femme",
+cat:"Montres",
+sex:"Femme",
+usd:39,
+desc:"Une touche délicate à votre poignet.",
+img:"https://images.unsplash.com/photo-1524592094714-0f0654e20314?auto=format&fit=crop&w=800&q=85"
+},
+
+{
+id:11,
+name:"Montre sport homme",
+cat:"Montres",
+sex:"Homme",
+usd:36,
+desc:"Un design sportif pour chaque jour.",
+img:"https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=800&q=85"
+},
+
+{
+id:12,
+name:"Bracelet fin femme",
+cat:"Bracelets",
+sex:"Femme",
+usd:12,
+desc:"Un bijou discret et lumineux.",
+img:"https://images.unsplash.com/photo-1611591437281-460bfbe1220a?auto=format&fit=crop&w=800&q=85"
+},
+
+{
+id:13,
+name:"Bracelet chaîne homme",
+cat:"Bracelets",
+sex:"Homme",
+usd:14,
+desc:"Un accessoire moderne et affirmé.",
+img:"https://images.unsplash.com/photo-1611652022419-a9419f74343d?auto=format&fit=crop&w=800&q=85"
+},
+
+{
+id:14,
+name:"Bracelet élégant femme",
+cat:"Bracelets",
+sex:"Femme",
+usd:10,
+desc:"Complétez votre style avec finesse.",
+img:"https://images.unsplash.com/photo-1573408301185-9146fe634ad0?auto=format&fit=crop&w=800&q=85"
+}
+
+];
+
+
+/* PANIER */
+
+let cart = {};
+
+
+/* FORMAT DES PRIX */
+
+function fbu(n) {
+    return Math.round(n * RATE).toLocaleString("fr-FR") + " FBU";
+}
+
+function price(n) {
+    return "$" + n.toFixed(2) + " USD";
+}
+
+
+/* AFFICHER LES PRODUITS */
+
+function render(cat = "Tout") {
+
+    const list = items.filter(p => cat === "Tout" || p.cat === cat);
+
+    document.getElementById("products").innerHTML = list.map(p => `
+
+    <article class="card">
+
+      <div class="photo">
+        <img
+          loading="lazy"
+          src="${p.img}"
+          alt="${p.name}"
+          onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=800&q=80'">
+
+        <span class="badge">${p.sex}</span>
+      </div>
+
+      <div class="details">
+
+        <div class="cat">${p.cat}</div>
+
+        <h3>${p.name}</h3>
+
+        <div class="desc">${p.desc}</div>
+
+        <div class="usd">${price(p.usd)}</div>
+
+        <div class="fbu">${fbu(p.usd)}</div>
+
+        <button class="add" onclick="add(${p.id})">
+          ＋ AJOUTER AU PANIER
+        </button>
+
+      </div>
+
+    </article>
+
+    `).join("");
+
+}
+
+
+/* FILTRER LES CATÉGORIES */
+
+document.querySelectorAll("#filters button").forEach(b => {
+
+    b.addEventListener("click", () => {
+
+        document.querySelectorAll("#filters button")
+            .forEach(x => x.classList.remove("active"));
+
+        b.classList.add("active");
+
+        render(b.dataset.cat);
+
+    });
+
+});
+
+
+/* AJOUTER AU PANIER */
+
+function add(id) {
+
+    cart[id] = (cart[id] || 0) + 1;
+
+    updateCart();
+
+    openCart();
+
+}
+
+
+/* MODIFIER LA QUANTITÉ */
+
+function change(id, n) {
+
+    cart[id] = (cart[id] || 0) + n;
+
+    if (cart[id] <= 0) {
+        delete cart[id];
+    }
+
+    updateCart();
+
+}
+
+
+/* METTRE À JOUR LE PANIER */
+
+function updateCart() {
+
+    const selected = items.filter(p => cart[p.id]);
+
+    const count = Object.values(cart)
+        .reduce((a, b) => a + b, 0);
+
+    document.getElementById("count").textContent = count;
+
+    document.getElementById("cartItems").innerHTML =
+        selected.length
+        ? selected.map(p => `
+
+        <div class="cartLine">
+
+          <div>
+            <strong>${p.name}</strong>
+
+            <small>
+              ${price(p.usd * cart[p.id])}
+              · ${fbu(p.usd * cart[p.id])}
+            </small>
+          </div>
+
+          <div class="qty">
+
+            <button onclick="change(${p.id},-1)">−</button>
+
+            ${cart[p.id]}
+
+            <button onclick="change(${p.id},1)">+</button>
+
+          </div>
+
+        </div>
+
+        `).join("")
+        : "<p>Votre panier est vide.</p>";
+
+    const sum = selected.reduce(
+        (s, p) => s + p.usd * cart[p.id],
+        0
+    );
+
+    document.getElementById("total").textContent =
+        "Total : " + price(sum) + " · " + fbu(sum);
+
+}
+
+
+/* OUVRIR LE PANIER */
+
+function openCart() {
+
+    document.getElementById("shade").classList.add("show");
+
+}
+
+
+/* FERMER LE PANIER */
+
+function closeCart() {
+
+    document.getElementById("shade").classList.remove("show");
+
+}
+
+function shadeClick(e) {
+
+    if (e.target.id === "shade") {
+        closeCart();
+    }
+
+}
+
+
+/* ENVOYER LA COMMANDE SUR WHATSAPP */
+
+function sendOrder() {
+
+    const selected = items.filter(p => cart[p.id]);
+
+    if (!selected.length) {
+        alert("Votre panier est vide.");
+        return;
+    }
+
+    const name = document.getElementById("customerName")
+        .value.trim();
+
+    if (!name) {
+        alert("Veuillez entrer votre nom.");
+        return;
+    }
+
+    const address = document.getElementById("address")
+        .value.trim() || "Non précisé";
+
+    const note = document.getElementById("note")
+        .value.trim() || "Aucune";
+
+    const sum = selected.reduce(
+        (s, p) => s + p.usd * cart[p.id],
+        0
+    );
+
+    let msg =
+        "Bonjour CHRISTOPHE STYLE, je souhaite commander :\n\n";
+
+    msg += "Nom : " + name + "\n";
+
+    msg += "Livraison : " + address + "\n\n";
+
+    selected.forEach(p => {
+
+        msg +=
+            "- " + p.name +
+            " (" + p.sex + ")" +
+            " x" + cart[p.id] +
+            " : " +
+            price(p.usd * cart[p.id]) +
+            " / " +
+            fbu(p.usd * cart[p.id]) +
+            "\n";
+
+    });
+
+    msg += "\nTOTAL : " + price(sum) + " / " + fbu(sum);
+
+    msg += "\nPrécisions : " + note;
+
+    const link =
+        "https://wa.me/" +
+        WHATSAPP +
+        "?text=" +
+        encodeURIComponent(msg);
+
+    window.open(link, "_blank");
+
+}
+
+
+/* LANCEMENT DE LA BOUTIQUE */
+
+render();
+
+updateCart();
+
+</script>
+
+</body>
+</html>
